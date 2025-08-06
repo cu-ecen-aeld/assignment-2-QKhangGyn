@@ -21,7 +21,7 @@ int writer(const char* writefile, const char* writestr){
         }
         //find the file
         int file_descriptor_int = 0;
-        file_descriptor_int = open(writefile, O_RDWR | O_CREAT | O_TRUNC);
+        file_descriptor_int = open(writefile, O_RDWR | O_CREAT | O_TRUNC, 0777);
         if (file_descriptor_int == -1){ // error in open, create the file
             printf("Error: cannot open the specified file, please check the file path again\n");    
             perror("Return error");
@@ -49,4 +49,30 @@ int writer(const char* writefile, const char* writestr){
     }
     closelog();
     return return_value_int; 
+}
+
+int main(int argc, char* argv[])
+{
+	//create variable
+	int return_value_int = 0;
+	//check the number of arguments
+	if(argc != (int)3){
+		printf("Error: invalid number of arguments.\n"
+			"The number of arguments should be 2.\n"
+			"The order of arguments should be: \n"
+			"1. The path of the file you want to create (place in the "")\n"
+			"2. The string or content you want to write to the file (place in the "")\n");
+		openlog("writer program", 0, LOG_USER);
+		syslog(LOG_ERR, "Error: invalid numbers of arguments\n");
+		closelog();
+		return_value_int = -1;
+	}
+	else{
+		//create variables
+		char* writefile_char_ptr = argv[1];
+		char* writestr_char_ptr = argv[2];
+		//call the write function
+		return_value_int = writer(writefile_char_ptr, writestr_char_ptr);
+	}
+	return 0;
 }
