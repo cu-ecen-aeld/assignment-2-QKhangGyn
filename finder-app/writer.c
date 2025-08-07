@@ -12,7 +12,7 @@ int writer(const char* writefile, const char* writestr){
     if(writefile == NULL){
         //print warning or error
         printf("Error: invalid path file\n");
-        return_value_int = -1;
+        return_value_int = 1;
         syslog(LOG_ERR, "Error: Invalid path file\n");
     }
     else {
@@ -25,7 +25,7 @@ int writer(const char* writefile, const char* writestr){
         if (file_descriptor_int == -1){ // error in open, create the file
             printf("Error: cannot open the specified file, please check the file path again\n");    
             perror("Return error");
-            return_value_int = -1;
+            return_value_int = 1;
             syslog(LOG_ERR, "Error: Cannot get the file path\n");
         }
         else {
@@ -39,7 +39,7 @@ int writer(const char* writefile, const char* writestr){
                 printf("Error while writing content to the file");
                 perror("Returned eroor");
                 syslog(LOG_ERR, "Error: Cannot writing to the file\n");
-                return_value_int = -1;
+                return_value_int = 1;
             }
             else {
                 printf("Writing successfully\n");
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 		openlog("writer program", 0, LOG_USER);
 		syslog(LOG_ERR, "Error: invalid numbers of arguments\n");
 		closelog();
-		return_value_int = -1;
+		return_value_int = 1;
 	}
 	else{
 		//create variables
@@ -74,5 +74,5 @@ int main(int argc, char* argv[])
 		//call the write function
 		return_value_int = writer(writefile_char_ptr, writestr_char_ptr);
 	}
-	return 0;
+	return return_value_int; 
 }
