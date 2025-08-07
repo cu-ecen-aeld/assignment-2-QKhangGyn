@@ -4,10 +4,10 @@
 #if the variable is defined and specified as aarch64-none-linux-gnu-, then CC = 
 writer: writer.c
 ifdef CROSS_COMPILE
-ifeq ($(CROSS_COMPILE),aarch64-none-linux-gnu-)
+ifeq ($(CROSS_COMPILE), aarch64-none-linux-gnu-)
 	$(CROSS_COMPILE)gcc $< -o $@
 else
-	@echo "CROSS_COMPILE has not beed defined but defined as: $(CROSS_COMPILE)"
+	@echo "CROSS_COMPILE has beed defined but defined as: $(CROSS_COMPILE)"
 	@echo "Nothing happens"
 endif
 else
